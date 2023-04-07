@@ -1,11 +1,13 @@
 turn="X"
 print("X")
- 
+
 a = {}
 def check(p,turn):
+    lap = False
     for i in range(1,3+1,1):
         for v in range(1,3+1,1):
             if str(i) + str(v) == str(p):
+                lap = True
                 if a[i,v] == "-":
                     if turn =="X":
                         a[i,v] = "X"
@@ -13,6 +15,8 @@ def check(p,turn):
                        a[i,v] = "O"
                 else:
                     return "daco"
+    if lap == False:
+        return "vcl"
  
 def crtable():
     for i in range(1,3+1,1):
@@ -37,13 +41,17 @@ op=0
 for i in range(1,100000000000,1):
     print("Lượt của",turn)
     p=int(input('Chọn ô'))
-    if check(p,turn) == "daco":
-        print("Ô đã dc chọn")
+    checked = check(p,turn)
+    if checked == "vcl":
+            print("Ô không tồn tại")
     else:
-        if turn=="X":
-            turn="O"
+        if checked == "daco":
+            print("Ô đã dc chọn")
         else:
-            turn="X"
+            if turn=="X":
+                turn="O"
+            else:
+                turn="X"
         show()
         if checkwin()=="win":
             print(turn,"thắng sau ",i," lượt")
